@@ -9,7 +9,7 @@
 
 / {
 	aliases {
-		i2c3 = &i2c4;
+		i2c1 = &i2c2;
 		mmc0 = &sdmmc1;
 	};
 	config {
@@ -37,11 +37,11 @@
 	st,digbypass;
 };
 
-&i2c4 {
+&i2c2 {
 	u-boot,dm-pre-reloc;
 };
 
-&i2c4_pins_a {
+&i2c2_pins_a {
 	u-boot,dm-pre-reloc;
 	pins {
 		u-boot,dm-pre-reloc;

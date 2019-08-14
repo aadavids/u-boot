@@ -540,6 +540,31 @@ int board_interface_eth_init(int interface_type, bool eth_clk_sel_reg,
 {
 	u8 *syscfg;
 	u32 value;
+	ofnode node;
+	struct gpio_desc phy_reset;
+	int ret;
+
+	node = ofnode_path("/soc/ethernet@5800a000/mdio0/ethernet-phy@7");
+	if (!ofnode_valid(node)) {
+		pr_debug("%s: no ethernet-phy@7 ?\n", __func__);
+		return -ENOENT;
+	}
+
+	if (gpio_request_by_name_nodev(node, "reset-gpios", 0,
+				       &phy_reset, GPIOD_IS_OUT)) {
+		pr_debug("%s: could not find ethernet-phy reset-gpios\n",
+			 __func__);
+		return -ENOENT;
+	}
+
+	ret = dm_gpio_set_value(&phy_reset, 1);
+	if (ret) {
+		pr_err("%s: can't set_value for eth_nrst gpio", __func__);
+		return -EBUSY;
+	}
+	mdelay(10);
+	ret = dm_gpio_set_value(&phy_reset, 0);
+
 
 	syscfg = (u8 *)syscon_get_first_range(STM32MP_SYSCON_SYSCFG);
 

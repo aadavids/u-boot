@@ -2,6 +2,7 @@
 /*
  * Copyright (C) 2018, STMicroelectronics - All Rights Reserved
  */
+#define DEBUG	1
 #include <common.h>
 #include <clk.h>
 #include <debug_uart.h>

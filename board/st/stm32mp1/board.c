@@ -46,9 +46,11 @@ int board_ddr_power_init(enum ddr_type ddr_type)
 
 	ret = uclass_get_device_by_driver(UCLASS_PMIC,
 					  DM_GET_DRIVER(pmic_stpmic1), &dev);
-	if (ret)
+	if (ret) {
 		/* No PMIC on power discrete board */
+		printf("PMIC chip device/driver not found, error = %d\n", ret);
 		return 0;
+	}
 
 	switch (ddr_type) {
 	case STM32MP_DDR3:

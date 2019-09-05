@@ -823,7 +823,7 @@ void stm32mp1_ddr_init(struct ddr_info *priv,
 		ret = board_ddr_power_init(STM32MP_LPDDR3);
 
 	if (ret)
-		panic("ddr power init failed\n");
+		panic("ddr power init failed, error = %d\n", ret);
 
 start:
 	debug("%s entry\n", __func__);

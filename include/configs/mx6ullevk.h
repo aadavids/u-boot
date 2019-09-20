@@ -14,6 +14,7 @@
 #include "mx6_common.h"
 #include <asm/mach-imx/gpio.h>
 #include "imx_env.h"
+#include "npi_common.h"
 
 #ifdef CONFIG_SECURE_BOOT
 #ifndef CONFIG_CSF_SIZE
@@ -154,8 +155,8 @@
 	"netargs=setenv bootargs console=${console},${baudrate} " \
 		BOOTARGS_CMA_SIZE \
 		"root=/dev/nfs " \
-	"ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0" \
-		"netboot=echo Booting from net ...; " \
+		"ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0" \
+	"netboot=echo Booting from net ...; " \
 		"${usb_net_cmd}; " \
 		"run netargs; " \
 		"if test ${ip_dyn} = yes; then " \
@@ -183,7 +184,7 @@
 				"bootz; " \
 			"fi; " \
 		"fi;\0" \
-		"findfdt="\
+	"findfdt="\
 			"if test $fdt_file = undefined; then " \
 				"if test $board_name = ULZ-EVK && test $board_rev = 14X14; then " \
 					"setenv fdt_file imx6ulz-14x14-evk.dtb; fi; " \
@@ -195,7 +196,7 @@
 					"echo WARNING: Could not determine dtb to use; " \
 				"fi; " \
 			"fi;\0" \
-		"findtee="\
+	"findtee="\
 			"if test $tee_file = undefined; then " \
 				"if test $board_name = ULZ-EVK && test $board_rev = 14X14; then " \
 					"setenv tee_file uTee-6ulzevk; fi; " \
@@ -207,7 +208,15 @@
 					"echo WARNING: Could not determine tee to use; " \
 				"fi; " \
 			"fi;\0" \
+	"fdtfile=undefined\0" \
+	"rdaddr=0x88000000\0" \
+	"fdtaddr=0x83000000\0" \
+	DEFAULT_MMC_ARGS \
+	NPI_BOOT \
+	NPI_UNAME_BOOT \
+	BOOTENV
 
+/*
 #define CONFIG_BOOTCOMMAND \
 	   "run findfdt;" \
 	   "run findtee;" \
@@ -222,6 +231,7 @@
 			   "fi; " \
 		   "fi; " \
 	   "else run netboot; fi"
+*/
 #endif
 
 /* Miscellaneous configurable options */
@@ -327,6 +337,35 @@
 
 #define CONFIG_MODULE_FUSE
 #define CONFIG_OF_SYSTEM_SETUP
+
+#define BOOTENV_DEV_LEGACY_MMC(devtypeu, devtypel, instance) \
+	"bootcmd_" #devtypel #instance "=" \
+	"setenv devtype mmc; " \
+	"setenv mmcdev " #instance"; "\
+	"setenv bootpart " #instance":1 ; "\
+	"run boot\0"
+
+#define BOOTENV_DEV_NAME_LEGACY_MMC(devtypeu, devtypel, instance) \
+	#devtypel #instance " "
+
+#define BOOTENV_DEV_NAND(devtypeu, devtypel, instance) \
+	"bootcmd_" #devtypel "=" \
+	"run nandboot\0"
+
+#define BOOTENV_DEV_NAME_NAND(devtypeu, devtypel, instance) \
+	#devtypel #instance " "
+
+/*
+ * MMC0 (uSD)  boot firstly
+ * MMC1 (eMMC) boot secondly
+ */
+#define BOOT_TARGET_DEVICES(func) \
+	func(MMC, mmc, 0) \
+	func(LEGACY_MMC, legacy_mmc, 0) \
+	func(MMC, mmc, 1) \
+	func(LEGACY_MMC, legacy_mmc, 1) \
+
+#include <config_distro_bootcmd.h>
 
 // #define HUSH_CMDLINE_DBG 1
 

@@ -328,4 +328,6 @@
 #define CONFIG_MODULE_FUSE
 #define CONFIG_OF_SYSTEM_SETUP
 
+// #define HUSH_CMDLINE_DBG 1
+
 #endif

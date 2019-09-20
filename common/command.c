@@ -574,6 +574,18 @@ enum command_ret_t cmd_process(int flag, int argc, char * const argv[],
 	enum command_ret_t rc = CMD_RET_SUCCESS;
 	cmd_tbl_t *cmdtp;
 
+#if defined(HUSH_CMDLINE_DBG)
+	{
+	int i;
+
+	printf("  +-+");
+	for (i = 0; i < argc; i++) {
+		printf("%s ", argv[i]);
+	}
+	printf("-+-\n");
+	}
+#endif
+
 	/* Look up command in command table */
 	cmdtp = find_cmd(argv[0]);
 	if (cmdtp == NULL) {

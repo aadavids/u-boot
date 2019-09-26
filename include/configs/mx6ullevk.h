@@ -276,7 +276,7 @@
 /* DMA stuff, needed for GPMI/MXS NAND support */
 #endif
 
-#define CONFIG_ENV_SIZE			SZ_8K
+#define CONFIG_ENV_SIZE			SZ_64K
 #if defined(CONFIG_ENV_IS_IN_MMC)
 #define CONFIG_ENV_OFFSET		(14 * SZ_64K)
 #elif defined(CONFIG_ENV_IS_IN_SPI_FLASH)

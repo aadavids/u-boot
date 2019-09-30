@@ -379,7 +379,11 @@ int board_late_init(void)
 #endif
 
 #ifdef CONFIG_ENV_VARS_UBOOT_RUNTIME_CONFIG
+	#ifdef IMX_BOARD_NAME
+	env_set("board_name", IMX_BOARD_NAME);
+	#else
 	env_set("board_name", "EVK");
+	#endif
 
 	if (is_mx6ull_9x9_evk())
 		env_set("board_rev", "9X9");

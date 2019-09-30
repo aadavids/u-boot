@@ -368,5 +368,6 @@
 #include <config_distro_bootcmd.h>
 
 // #define HUSH_CMDLINE_DBG 1
+#define IMX_BOARD_NAME "NPI"
 
 #endif

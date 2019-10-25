@@ -174,6 +174,17 @@ int board_ddr_power_init(enum ddr_type ddr_type)
 		break;
 	};
 
-	return 0;
+	ret = pmic_reg_read(dev, STPMIC1_PKEY_TURNOFF_CR);
+	if (ret < 0)
+		return ret;
+
+	/* Long press for 5 secs will poweroff */
+	ret |= STPMIC1_PKEY_LKP_OFF;
+	ret &= ~STPMIC1_PKEY_LKP_TMR_MASK;
+	ret |= STPMIC1_PKEY_LKP_SECS(5);
+
+	ret = pmic_reg_write(dev, STPMIC1_PKEY_TURNOFF_CR, ret);
+
+	return ret;
 }
 #endif

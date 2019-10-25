@@ -7,6 +7,7 @@
 #define __PMIC_STPMIC1_H_
 
 #define STPMIC1_MAIN_CR			0x10
+#define STPMIC1_PKEY_TURNOFF_CR		0x16
 #define STPMIC1_BUCKS_MRST_CR		0x18
 #define STPMIC1_LDOS_MRST_CR		0x1a
 #define STPMIC1_BUCKX_MAIN_CR(buck)	(0x20 + (buck))
@@ -19,6 +20,12 @@
 /* Main PMIC Control Register (MAIN_CR) */
 #define STPMIC1_SWOFF			BIT(0)
 #define STPMIC1_RREQ_EN			BIT(1)
+
+/* PONKEYn turn-OFF control register (PKEY_TURNOFF_CR) */
+#define STPMIC1_PKEY_LKP_OFF		BIT(7)
+#define STPMIC1_PKEY_CLEAR_OCP_FLAG	BIT(6)
+#define STPMIC1_PKEY_LKP_TMR_MASK	GENMASK(3, 0)
+#define STPMIC1_PKEY_LKP_SECS(s)	(16 - (s))
 
 /* BUCKS_MRST_CR */
 #define STPMIC1_MRST_BUCK(buck)		BIT(buck)

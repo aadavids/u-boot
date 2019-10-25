@@ -408,6 +408,22 @@ int board_usb_init(int index, enum usb_init_type init)
 	return dwc2_udc_probe(&stm32mp_otg_data);
 }
 
+int board_usbhost_power(void) {
+	unsigned usb1_en, usb2_en;
+	int ret;
+
+	ret = gpio_lookup_name("GPIOH13", NULL, NULL, &usb1_en);
+	ret = gpio_lookup_name("GPIOF8",  NULL, NULL, &usb2_en);
+	ret = gpio_request(usb1_en, "USB1_EN");
+	ret = gpio_request(usb2_en, "USB2_EN");
+
+	gpio_direction_output(usb1_en, 1);
+	mdelay(1);
+	gpio_direction_output(usb2_en, 1);
+
+	return ret;
+}
+
 int g_dnl_board_usb_cable_connected(void)
 {
 	if (stm32mp_otg_data.priv)
@@ -862,6 +878,8 @@ int board_init(void)
 #if defined(CONFIG_USB_GADGET) && defined(CONFIG_USB_GADGET_DWC2_OTG)
 	board_usbotg_init();
 #endif
+
+	board_usbhost_power();
 
 	return 0;
 }

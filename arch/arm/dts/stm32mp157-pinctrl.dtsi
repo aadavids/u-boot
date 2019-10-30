@@ -1317,7 +1317,7 @@
 				pins1 {
 					pinmux = <STM32_PINMUX('F', 0, AF9)>, /* SDMMC3_D0 */
 						 <STM32_PINMUX('F', 4, AF9)>, /* SDMMC3_D1 */
-						 <STM32_PINMUX('F', 5, AF9)>, /* SDMMC3_D2 */
+						 <STM32_PINMUX('D', 5, AF10)>, /* SDMMC3_D2 */
 						 <STM32_PINMUX('D', 7, AF10)>, /* SDMMC3_D3 */
 						 <STM32_PINMUX('F', 1, AF9)>; /* SDMMC3_CMD */
 					slew-rate = <1>;
@@ -1336,7 +1336,7 @@
 				pins1 {
 					pinmux = <STM32_PINMUX('F', 0, AF9)>, /* SDMMC3_D0 */
 						 <STM32_PINMUX('F', 4, AF9)>, /* SDMMC3_D1 */
-						 <STM32_PINMUX('F', 5, AF9)>, /* SDMMC3_D2 */
+						 <STM32_PINMUX('D', 5, AF10)>, /* SDMMC3_D2 */
 						 <STM32_PINMUX('D', 7, AF10)>; /* SDMMC3_D3 */
 					slew-rate = <1>;
 					drive-push-pull;
@@ -1360,7 +1360,7 @@
 				pins {
 					pinmux = <STM32_PINMUX('F', 0, ANALOG)>, /* SDMMC3_D0 */
 						 <STM32_PINMUX('F', 4, ANALOG)>, /* SDMMC3_D1 */
-						 <STM32_PINMUX('F', 5, ANALOG)>, /* SDMMC3_D2 */
+						 <STM32_PINMUX('D', 5, ANALOG)>, /* SDMMC3_D2 */
 						 <STM32_PINMUX('D', 7, ANALOG)>, /* SDMMC3_D3 */
 						 <STM32_PINMUX('G', 15, ANALOG)>, /* SDMMC3_CK */
 						 <STM32_PINMUX('F', 1, ANALOG)>; /* SDMMC3_CMD */
@@ -1495,7 +1495,7 @@
 
 			usart2_pins_a: usart2-0 {
 				pins1 {
-					pinmux = <STM32_PINMUX('D', 5, AF7)>, /* USART2_TX */
+					pinmux = <STM32_PINMUX('F', 5, AF7)>, /* USART2_TX */
 						 <STM32_PINMUX('D', 4, AF7)>; /* USART2_RTS */
 					bias-disable;
 					drive-push-pull;
@@ -1510,7 +1510,7 @@
 
 			usart2_idle_pins_a: usart2-idle-0 {
 				pins1 {
-					pinmux = <STM32_PINMUX('D', 5, ANALOG)>, /* USART2_TX */
+					pinmux = <STM32_PINMUX('F', 5, ANALOG)>, /* USART2_TX */
 						 <STM32_PINMUX('D', 4, ANALOG)>, /* USART2_RTS */
 						 <STM32_PINMUX('D', 3, ANALOG)>; /* USART2_CTS_NSS */
 				};
@@ -1522,7 +1522,7 @@
 
 			usart2_sleep_pins_a: usart2-sleep-0 {
 				pins {
-					pinmux = <STM32_PINMUX('D', 5, ANALOG)>, /* USART2_TX */
+					pinmux = <STM32_PINMUX('F', 5, ANALOG)>, /* USART2_TX */
 						 <STM32_PINMUX('D', 4, ANALOG)>, /* USART2_RTS */
 						 <STM32_PINMUX('D', 6, ANALOG)>, /* USART2_RX */
 						 <STM32_PINMUX('D', 3, ANALOG)>; /* USART2_CTS_NSS */

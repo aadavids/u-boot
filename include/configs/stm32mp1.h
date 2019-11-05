@@ -196,4 +196,6 @@
 #endif /* ifndef CONFIG_SPL_BUILD */
 #endif /* ifdef CONFIG_DISTRO_DEFAULTS*/
 
+// #define HUSH_CMDLINE_DBG 1
+
 #endif /* __CONFIG_H */

@@ -9,6 +9,7 @@
 #define __CONFIG_H
 #include <linux/sizes.h>
 #include <asm/arch/stm32.h>
+#include "npi_common.h"
 
 /*
  * Number of clock ticks in 1 sec
@@ -48,7 +49,7 @@
 /*
  * Env parameters
  */
-#define CONFIG_ENV_SIZE				SZ_4K
+#define CONFIG_ENV_SIZE				SZ_64K
 
 /* ATAGs */
 #define CONFIG_CMDLINE_TAG
@@ -122,6 +123,39 @@
 
 #if !defined(CONFIG_SPL_BUILD)
 
+  #if 1 /* NPI BOOT */
+#define BOOTENV_DEV_LEGACY_MMC(devtypeu, devtypel, instance) \
+	"bootcmd_" #devtypel #instance "=" \
+	"setenv devtype mmc; " \
+	"setenv mmcdev " #instance"; "\
+	"setenv bootpart " #instance":1 ; "\
+	"run boot\0"
+
+#define BOOTENV_DEV_NAME_LEGACY_MMC(devtypeu, devtypel, instance) \
+	#devtypel #instance " "
+
+#define BOOTENV_DEV_NAND(devtypeu, devtypel, instance) \
+	"bootcmd_" #devtypel #instance "=" \
+	"nand device " #instance "; " \
+	"run nandboot\0"
+
+#define BOOTENV_DEV_NAME_NAND(devtypeu, devtypel, instance) \
+	#devtypel #instance " "
+
+/*
+ * MMC0 (uSD)  boot firstly
+ * MMC1 (eMMC) boot secondly
+ * NAND0(NAND) boot thirdly
+ */
+#define BOOT_TARGET_DEVICES(func) \
+	func(MMC, mmc, 0) \
+	func(LEGACY_MMC, legacy_mmc, 0) \
+	func(MMC, mmc, 1) \
+	func(LEGACY_MMC, legacy_mmc, 1) \
+	func(NAND, nand, 0)
+
+  #else /* NPI BOOT */
+
 /* default order is eMMC (SDMMC 1)/ NAND / SDCARD (SDMMC 0) / SDMMC2 */
 #define BOOT_TARGET_DEVICES(func) \
 	func(MMC, mmc, 1) \
@@ -140,6 +174,7 @@
 #define CONFIG_PREBOOT
 #undef CONFIG_BOOTCOMMAND
 #define CONFIG_BOOTCOMMAND "echo \"Boot over ${boot_device}${boot_instance}!\";run bootcmd_stm32mp"
+  #endif /* NPI BOOT */
 
 #define STM32MP_BOOTCMD "bootcmd_stm32mp=" \
 	"if test ${boot_device} = serial || test ${boot_device} = usb; then " \
@@ -176,7 +211,7 @@
 	"stdin=serial\0" \
 	"stdout=serial\0" \
 	"stderr=serial\0" \
-	"bootdelay=1\0" \
+	"bootdelay=0\0" \
 	"kernel_addr_r=0xc2000000\0" \
 	"fdt_addr_r=0xc4000000\0" \
 	"scriptaddr=0xc4100000\0" \
@@ -191,7 +226,16 @@
 	STM32MP_BOOTCMD \
 	STM32MP_MTDPARTS \
 	BOOTENV \
-	"boot_net_usb_start=true\0"
+	"boot_net_usb_start=true\0" \
+	"fdtfile=undefined\0" \
+	"loadaddr=0xC2000000\0" \
+	"fdtaddr=0xC4000000\0" \
+	"rdaddr=0xC4400000\0" \
+	"console=ttySTM0,115200\0" \
+	DEFAULT_MMC_ARGS \
+	NPI_BOOT \
+	NPI_UNAME_BOOT \
+	BOOTENV
 
 #endif /* ifndef CONFIG_SPL_BUILD */
 #endif /* ifdef CONFIG_DISTRO_DEFAULTS*/

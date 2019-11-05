@@ -165,11 +165,11 @@
 			"for i in 1 2 3 4 5 6 7 ; do " \
 				"setenv mmcpart ${i};" \
 				"setenv curpart ${mmcdev}:${mmcpart};" \
-				"if test -e ${devtype} ${curpart} /boot/uEnv.txt; then " \
+				"if test -e ${devtype} ${curpart} /uEnv.txt; then " \
 					"setenv bootpart ${mmcdev}:${mmcpart};" \
-					"load ${devtype} ${curpart} ${loadaddr} /boot/uEnv.txt;" \
+					"load ${devtype} ${curpart} ${loadaddr} /uEnv.txt;" \
 					"env import -t ${loadaddr} ${filesize};" \
-					"echo Loaded environment from /boot/uEnv.txt;" \
+					"echo Loaded environment from /uEnv.txt;" \
 				"fi;" \
 				"if test -e ${devtype} ${curpart} /bin/sh; then " \
 					"setenv rootpart ${mmcdev}:${mmcpart};" \
@@ -178,7 +178,7 @@
 						"setenv fdtfile ${dtb};" \
 						"echo Using: dtb=${fdtfile} ...;" \
 					"fi;" \
-					"echo Checking if uname_r is set in /boot/uEnv.txt...;" \
+					"echo Checking if uname_r is set in /uEnv.txt...;" \
 					"if test -n ${uname_r}; then " \
 						"setenv oldroot /dev/mmcblk${mmcdev}p${mmcpart};" \
 						"echo Running uname_boot ...;" \

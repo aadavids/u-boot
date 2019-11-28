@@ -139,9 +139,13 @@
 		u-boot,dm-pre-reloc;
 	};
 
-	/* VCO = 594.0 MHz => P = 99, Q = 74, R = 74 */
+	/*
+	 * ETH_CLK required a 125MHz clock, so
+	 * original:  VCO = 594.0 MHz => P = 99, Q = 74, R = 74
+	 * current :  VCO = 750.0 MHz => P =125, Q = 75, R = 75
+	 */
 	pll4: st,pll@3 {
-		cfg = < 3 98 5 7 7 PQR(1,1,1) >;
+		cfg = < 3 124 5 9 9 PQR(1,1,1) >;
 		u-boot,dm-pre-reloc;
 	};
 };

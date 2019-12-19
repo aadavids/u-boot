@@ -324,6 +324,8 @@
 				"echo debug: [bootz ${loadaddr} - ${fdtaddr}] ... ;" \
 				"bootz ${loadaddr} - ${fdtaddr}; " \
 			"fi;" \
+		"else " \
+			"echo debug: file missing ${devtype} ${bootpart} ${bootdir}/${bootfile};" \
 		"fi;\0" \
 
 #endif//__CONFIG_NPI_COMMON_H__

@@ -467,7 +467,7 @@ static int setup_mac_address(void)
 	/* MAC already in environment */
 	if (eth_env_get_enetaddr("ethaddr", enetaddr))
 		return 0;
-
+#if 0
 	ret = uclass_get_device_by_driver(UCLASS_MISC,
 					  DM_GET_DRIVER(stm32mp_bsec),
 					  &dev);
@@ -481,7 +481,7 @@ static int setup_mac_address(void)
 
 	for (i = 0; i < 6; i++)
 		enetaddr[i] = ((uint8_t *)&otp)[i];
-
+#endif 
 	if (!is_valid_ethaddr(enetaddr)) {
 		pr_err("invalid MAC address in OTP %pM", enetaddr);
 		return -EINVAL;

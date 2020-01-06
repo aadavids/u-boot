@@ -131,7 +131,7 @@
 				"echo Checking if uenvcmd is set ...;" \
 				"if test -n ${uenvcmd}; then " \
 					"echo Running uenvcmd ...;" \
-					"run uenvcmd;" \
+					"run uenvcmd; setenv uenvcmd;" \
 				"fi;" \
 				"echo Checking if client_ip is set ...;" \
 				"if test -n ${client_ip}; then " \
@@ -170,6 +170,10 @@
 					"load ${devtype} ${curpart} ${loadaddr} /uEnv.txt;" \
 					"env import -t ${loadaddr} ${filesize};" \
 					"echo Loaded environment from /uEnv.txt;" \
+					"if test -n ${uenvcmd}; then " \
+						"echo Running uenvcmd ...${uenvcmd};" \
+						"run uenvcmd; setenv uenvcmd;" \
+					"fi;" \
 				"fi;" \
 				"if test -e ${devtype} ${curpart} /bin/sh; then " \
 					"setenv rootpart ${mmcdev}:${mmcpart};" \
